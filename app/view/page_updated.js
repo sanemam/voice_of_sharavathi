@@ -120,7 +120,7 @@ export default function PublicView() {
                   </svg>
                 </button>
               </div>
-              <p className="text-gray-600 mb-8 font-medium">"{shareContent.title}"</p>
+              <p className="text-gray-600 mb-8 font-medium">&ldquo;{shareContent.title}&rdquo;</p>
               <div className="grid grid-cols-2 gap-4">
                 {[
                   { name: 'Twitter', icon: '𝕏', fn: 'twitter', color: 'bg-black text-white' },
