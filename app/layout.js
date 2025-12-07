@@ -3,8 +3,43 @@ import Link from 'next/link'
 
 export const metadata = {
   title: 'Voice of Sharavathi',
-  description: 'A website for comunity stories and content',
+  description: 'Discover inspiring stories about river conservation and sustainable living. Join our mission to protect and restore our precious waterways.',
+  keywords: 'river conservation, Sharavathi, environment, sustainability, water protection',
+  authors: [{ name: 'Voice of Sharavathi Team' }],
   viewport: 'width=device-width, initial-scale=1',
+  openGraph: {
+    title: 'Voice of Sharavathi - River Conservation Stories',
+    description: 'Discover inspiring stories about river conservation and sustainable living. Join our mission to protect and restore our precious waterways.',
+    url: 'https://your-domain.com',
+    siteName: 'Voice of Sharavathi',
+    images: [
+      {
+        url: '/og-image.jpg', // You'll need to add this image
+        width: 1200,
+        height: 630,
+        alt: 'Voice of Sharavathi - River Conservation',
+      },
+    ],
+    locale: 'en_US',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Voice of Sharavathi - River Conservation Stories',
+    description: 'Discover inspiring stories about river conservation and sustainable living.',
+    images: ['/og-image.jpg'], // You'll need to add this image
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
+  },
 }
 
 export default function RootLayout({ children }) {
