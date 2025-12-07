@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useState, useRef } from 'react'
+import Image from 'next/image'
 
 export default function PublicView() {
   const [contents, setContents] = useState([])
@@ -149,7 +150,7 @@ export default function PublicView() {
               </svg>
             </div>
             <h3 className="text-2xl font-semibold text-blue-900 mb-2 animate-pulse">Content Coming Soon</h3>
-            <p className="text-gray-700 max-w-md mx-auto">We're gathering powerful stories and evidence about river conservation. Stay tuned as we share important updates on our mission to protect and restore our rivers. 🌊</p>
+            <p className="text-gray-700 max-w-md mx-auto">We are gathering powerful stories and evidence about river conservation. Stay tuned as we share important updates on our mission to protect and restore our rivers. 🌊</p>
           </div>
         ) : (
           <div className="space-y-12">
@@ -162,9 +163,11 @@ export default function PublicView() {
                 <div className="md:flex">
                   {content.contentType === 'image' && (
                       <div className="md:w-1/3 relative overflow-hidden">
-                        <img
+                        <Image
                           src={content.image}
                           alt={content.title}
+                          width={400}
+                          height={300}
                           className="w-full h-64 md:h-full object-cover group-hover:scale-110 transition-transform duration-700"
                         />
                         <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
