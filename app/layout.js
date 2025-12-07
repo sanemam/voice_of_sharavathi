@@ -1,5 +1,6 @@
 import './globals.css'
 import Link from 'next/link'
+export const metadataBase = new URL('https://voice-of-sharavathi.vercel.app');
 
 export const metadata = {
   title: 'Voice of Sharavathi',
@@ -10,7 +11,7 @@ export const metadata = {
   openGraph: {
     title: 'Voice of Sharavathi - River Conservation Stories',
     description: 'Discover inspiring stories about river conservation and sustainable living. Join our mission to protect and restore our precious waterways.',
-    url: 'https://your-domain.com',
+    url: 'https://voice-of-sharavathi.vercel.app',
     siteName: 'Voice of Sharavathi',
     images: [
       {
