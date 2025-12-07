@@ -4,6 +4,13 @@ import { query as dbQuery } from '../../../lib/db'
 
 export async function GET() {
   try {
+    console.log('GET /api/content called');
+    console.log('Environment check:', {
+      hasSupabase: !!supabase,
+      hasDbQuery: !!dbQuery,
+      hasSupabaseDbUrl: !!process.env.SUPABASE_DB_URL
+    });
+
     // If Supabase is configured, try it first (fastest)
     if (supabase) {
       try {
@@ -89,7 +96,9 @@ export async function GET() {
     }
 
     // Fallback to file storage
+    console.log('Falling back to file storage');
     const contents = await readContents();
+    console.log('File storage contents:', contents.length, 'items');
     return new Response(JSON.stringify(contents), { status: 200 });
   } catch (error) {
     console.error('Error:', error);
