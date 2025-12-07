@@ -13,6 +13,23 @@ export default function EditContent() {
   const params = useParams()
   const id = params.id
 
+  // Check authentication on mount
+  useEffect(() => {
+    const checkAuth = async () => {
+      try {
+        const response = await fetch('/api/auth', { method: 'GET' })
+        if (!response.ok) {
+          router.push('/login')
+          return
+        }
+      } catch (error) {
+        router.push('/login')
+      }
+    }
+
+    checkAuth()
+  }, [router])
+
   useEffect(() => {
     fetch(`/api/content/${id}`)
       .then(res => res.json())

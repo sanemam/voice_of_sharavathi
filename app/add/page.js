@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 
 export default function AddContent() {
@@ -12,6 +12,23 @@ export default function AddContent() {
   const [platform, setPlatform] = useState('none')
   const [uploading, setUploading] = useState(false)
   const router = useRouter()
+
+  // Check authentication on mount
+  useEffect(() => {
+    const checkAuth = async () => {
+      try {
+        const response = await fetch('/api/auth', { method: 'GET' })
+        if (!response.ok) {
+          router.push('/login')
+          return
+        }
+      } catch (error) {
+        router.push('/login')
+      }
+    }
+
+    checkAuth()
+  }, [router])
 
   const handleImageUpload = async (e) => {
     const file = e.target.files[0]

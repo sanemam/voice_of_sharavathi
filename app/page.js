@@ -2,14 +2,17 @@
 
 import { useEffect, useState, useRef } from 'react'
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 
 export default function ManagePage() {
   const [contents, setContents] = useState([])
   const [loading, setLoading] = useState(true)
+  const [authChecked, setAuthChecked] = useState(false)
   const [likes, setLikes] = useState({})
   const [readProgress, setReadProgress] = useState(0)
   const [currentTheme, setCurrentTheme] = useState('blue')
   const containerRef = useRef(null)
+  const router = useRouter()
 
   const themes = {
     blue: 'from-blue-50 to-indigo-100',
@@ -18,7 +21,27 @@ export default function ManagePage() {
     orange: 'from-orange-50 to-red-100'
   }
 
+  // Check authentication on mount
   useEffect(() => {
+    const checkAuth = async () => {
+      try {
+        const response = await fetch('/api/auth', { method: 'GET' })
+        if (!response.ok) {
+          router.push('/login')
+          return
+        }
+        setAuthChecked(true)
+      } catch (error) {
+        router.push('/login')
+      }
+    }
+
+    checkAuth()
+  }, [router])
+
+  useEffect(() => {
+    if (!authChecked) return // Don't fetch content until auth is checked
+
     fetch('/api/content')
       .then(res => res.json())
       .then(data => {
@@ -36,7 +59,7 @@ export default function ManagePage() {
         setContents([])
         setLoading(false)
       })
-  }, [])
+  }, [authChecked])
 
   useEffect(() => {
     const handleScroll = () => {
@@ -80,6 +103,17 @@ export default function ManagePage() {
     if (confirm('Are you sure you want to delete this content?')) {
       await fetch(`/api/content/${id}`, { method: 'DELETE' })
       setContents(contents.filter(c => c.id !== id))
+    }
+  }
+
+  const handleLogout = async () => {
+    try {
+      await fetch('/api/auth', { method: 'DELETE' })
+      router.push('/login')
+    } catch (error) {
+      console.error('Logout failed:', error)
+      // Force redirect even if API call fails
+      router.push('/login')
     }
   }
 
@@ -140,6 +174,15 @@ export default function ManagePage() {
               </svg>
               Public View
             </Link>
+            <button
+              onClick={handleLogout}
+              className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-red-600 to-red-700 text-white font-semibold rounded-xl hover:from-red-700 hover:to-red-800 transition-all duration-200 transform hover:scale-105"
+            >
+              <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+              </svg>
+              Logout
+            </button>
           </div>
         </div>
 

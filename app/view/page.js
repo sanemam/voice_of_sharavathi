@@ -2,10 +2,12 @@
 
 import { useEffect, useState, useRef } from 'react'
 import Image from 'next/image'
+import Link from 'next/link'
 
 export default function PublicView() {
   const [contents, setContents] = useState([])
   const [loading, setLoading] = useState(true)
+  const [isAuthenticated, setIsAuthenticated] = useState(null) // null = loading, true = authenticated, false = not authenticated
   const [likes, setLikes] = useState({})
   const [readProgress, setReadProgress] = useState(0)
   const [currentTheme, setCurrentTheme] = useState('blue')
@@ -20,6 +22,31 @@ export default function PublicView() {
     green: 'from-green-50 to-emerald-100',
     orange: 'from-orange-50 to-red-100'
   }
+
+  // Check authentication status
+  useEffect(() => {
+    const checkAuth = async () => {
+      try {
+        console.log('Checking authentication...')
+        const response = await fetch('/api/auth', { method: 'GET' })
+        console.log('Auth response status:', response.status)
+        if (response.ok) {
+          const data = await response.json()
+          console.log('Auth response data:', data)
+          setIsAuthenticated(data.authenticated === true)
+          console.log('Setting isAuthenticated to:', data.authenticated === true)
+        } else {
+          console.log('Auth response not ok, setting false')
+          setIsAuthenticated(false)
+        }
+      } catch (error) {
+        console.error('Auth check failed:', error)
+        setIsAuthenticated(false)
+      }
+    }
+
+    checkAuth()
+  }, [])
 
   useEffect(() => {
     fetch('/api/content')
@@ -147,6 +174,36 @@ export default function PublicView() {
           <p className="text-gray-700 max-w-2xl mx-auto mb-6" style={{fontFamily: 'Palatino Linotype, serif', fontSize: '38px', fontWeight: '400', fontStyle: 'italic', letterSpacing: '1px'}}>
             One river. One responsibility.
           </p>
+
+          {/* Admin Navigation - Only show if authenticated */}
+          {isAuthenticated === true && (
+            <div className="flex justify-center space-x-4 mb-8">
+              <Link href="/" className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-semibold rounded-xl hover:from-blue-700 hover:to-indigo-700 transition-all duration-200 transform hover:scale-105">
+                <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                </svg>
+                Manage Content
+              </Link>
+              <Link href="/add" className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-green-600 to-blue-600 text-white font-semibold rounded-xl hover:from-green-700 hover:to-blue-700 transition-all duration-200 transform hover:scale-105">
+                <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+                </svg>
+                Add New Content
+              </Link>
+            </div>
+          )}
+
+          {/* Login prompt for non-authenticated users - only show after auth check */}
+          {isAuthenticated === false && (
+            <div className="text-center mb-8">
+              <Link href="/login" className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-semibold rounded-xl hover:from-indigo-700 hover:to-purple-700 transition-all duration-200 transform hover:scale-105">
+                <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+                </svg>
+                Admin Login
+              </Link>
+            </div>
+          )}
         </div>
 
         {loading ? (
