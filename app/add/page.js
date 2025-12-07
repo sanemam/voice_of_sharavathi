@@ -101,13 +101,13 @@ export default function AddContent() {
       <div className="max-w-2xl mx-auto">
         <div className="bg-white rounded-3xl shadow-2xl overflow-hidden">
           <div className="bg-gradient-to-r from-green-600 to-blue-600 px-8 py-6">
-            <h1 className="text-3xl font-bold text-white flex items-center">
-              <svg className="w-8 h-8 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold text-white flex items-center">
+              <svg className="w-6 h-6 md:w-8 md:h-8 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
               </svg>
               Add New Content
             </h1>
-            <p className="text-green-100 mt-2">Share your amazing content with the world</p>
+            <p className="text-green-100 mt-2 text-sm md:text-base">Share your amazing content with the world</p>
           </div>
 
           <form onSubmit={handleSubmit} className="p-8 space-y-6">
@@ -126,7 +126,7 @@ export default function AddContent() {
                   setImage('')
                   setExternalUrl('')
                 }}
-                className="w-full p-4 border-2 border-gray-300 rounded-xl focus:border-orange-500 focus:ring-2 focus:ring-orange-200 transition-all duration-200 text-lg"
+                className="w-full p-4 border-2 border-gray-300 rounded-xl focus:border-orange-500 focus:ring-2 focus:ring-orange-200 transition-all duration-200 text-base md:text-lg"
               >
                 <option value="image">Image</option>
                 <option value="video">Video (YouTube, etc.)</option>

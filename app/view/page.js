@@ -7,7 +7,8 @@ import Link from 'next/link'
 export default function PublicView() {
   const [contents, setContents] = useState([])
   const [loading, setLoading] = useState(true)
-  const [isAuthenticated, setIsAuthenticated] = useState(null) // null = loading, true = authenticated, false = not authenticated
+  const [isAuthenticated, setIsAuthenticated] = useState(false)
+  const [authChecked, setAuthChecked] = useState(false)
   const [likes, setLikes] = useState({})
   const [readProgress, setReadProgress] = useState(0)
   const [currentTheme, setCurrentTheme] = useState('blue')
@@ -172,10 +173,10 @@ export default function PublicView() {
 
       <div className="max-w-7xl mx-auto relative z-10">
         <div className="text-center mb-12">
-          <h1 className="font-black text-gray-900 mb-6 tracking-tight leading-none" style={{fontFamily: 'Georgia, serif', fontSize: '80px', fontWeight: 900, letterSpacing: '-0.02em'}}>
+          <h1 className="font-black text-gray-900 mb-6 tracking-tight leading-none text-4xl md:text-6xl lg:text-7xl xl:text-8xl" style={{fontFamily: 'Georgia, serif', fontWeight: 900, letterSpacing: '-0.02em'}}>
             Voice of Sharavathi
           </h1>
-          <p className="text-gray-700 max-w-2xl mx-auto mb-6" style={{fontFamily: 'Palatino Linotype, serif', fontSize: '38px', fontWeight: '400', fontStyle: 'italic', letterSpacing: '1px'}}>
+          <p className="text-gray-700 max-w-2xl mx-auto mb-6 text-lg md:text-xl lg:text-2xl xl:text-3xl" style={{fontFamily: 'Palatino Linotype, serif', fontWeight: '400', fontStyle: 'italic', letterSpacing: '1px'}}>
             One river. One responsibility.
           </p>
 
