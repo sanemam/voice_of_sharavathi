@@ -172,7 +172,7 @@ export default function PublicView() {
 
       <div className="max-w-7xl mx-auto relative z-10">
         <div className="text-center mb-12">
-          <h1 className="font-black text-gray-900 mb-6 tracking-tight leading-none" style={{fontFamily: 'Georgia, serif', fontSize: '100px', fontWeight: 900, letterSpacing: '-0.02em'}}>
+          <h1 className="font-black text-gray-900 mb-6 tracking-tight leading-none" style={{fontFamily: 'Georgia, serif', fontSize: '80px', fontWeight: 900, letterSpacing: '-0.02em'}}>
             Voice of Sharavathi
           </h1>
           <p className="text-gray-700 max-w-2xl mx-auto mb-6" style={{fontFamily: 'Palatino Linotype, serif', fontSize: '38px', fontWeight: '400', fontStyle: 'italic', letterSpacing: '1px'}}>
